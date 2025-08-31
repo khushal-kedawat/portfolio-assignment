@@ -10,7 +10,7 @@ A production-ready **MERN stack project** built for showcasing **profile, skills
 
 ## 🌐 Live Demo
 - **Frontend (Vercel)** → [Live App](https://aboutme-umber-five.vercel.app/)  
-- **Backend (Render)** → [API Endpoint](https://https://aboutme-backend.onrender.com/api/profiles)  
+- **Backend (Render)** → [API Endpoint](https://aboutme-backend.onrender.com/api/profiles)  
 
 ---
 
