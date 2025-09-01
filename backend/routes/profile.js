@@ -45,7 +45,7 @@ router.put('/', async (req, res) => {
   }
 });
 
-// Get projects (with optional ?skill=)
+// Get projects (with optional ?skill=) as quey parameter
 router.get('/projects', async (req, res) => {
   try {
     const { skill } = req.query;

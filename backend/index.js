@@ -12,8 +12,7 @@ app.use(cors({
   origin: '*'
 }));
 
-// --- FIX IS HERE ---
-// Add this root route to handle requests to the base URL
+
 app.get("/", (req, res) => res.send("Welcome to the About Me API!"));
 
 app.use("/api/profiles", routes);

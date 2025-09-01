@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 
-// --- Configuration ---
-// This is the URL for the backend you deployed on Render.
+//.Backend -- here the backend is deployed via render
 const API_URL = import.meta.env.VITE_API_URL;
 
-// --- SVG Icons (Self-contained, no external libraries needed) ---
+
 const GithubIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-github">
     <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
@@ -21,16 +20,13 @@ const LinkIcon = () => (
     <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
 );
 
-// --- Reusable Components ---
 
-// Loading Spinner Component
 const LoadingSpinner = () => (
     <div className="flex justify-center items-center h-screen bg-gray-900">
         <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-blue-500"></div>
     </div>
 );
 
-// Error Message Component
 const ErrorDisplay = ({ message }) => (
     <div className="flex justify-center items-center h-screen bg-gray-900 text-white">
         <div className="bg-gray-800 border border-red-500 text-red-200 px-6 py-4 rounded-lg shadow-lg max-w-md text-center" role="alert">
@@ -41,16 +37,16 @@ const ErrorDisplay = ({ message }) => (
 );
 
 
-// Profile Header Component
+
 const ProfileHeader = ({ profile }) => {
     if (!profile) return null;
     return (
         <div className="text-center mb-12">
             <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-2">{profile.name}</h1>
-            {/* Using a fallback for bio in case it doesn't exist in the data */}
+            
             <p className="text-lg md:text-xl text-gray-400 mb-4 max-w-2xl mx-auto">{profile.bio || `Education: ${profile.education}`}</p>
             <div className="flex justify-center space-x-4">
-                {/* FIX 1: Changed 'profile.social' to 'profile.links' to match your data */}
+                
                 {profile.links?.github && (
                     <a href={profile.links.github} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors duration-300">
                         <GithubIcon />
@@ -66,7 +62,7 @@ const ProfileHeader = ({ profile }) => {
     );
 };
 
-// Skills Component with Search
+
 const Skills = ({ skills }) => {
     const [searchTerm, setSearchTerm] = useState('');
     
@@ -97,7 +93,7 @@ const Skills = ({ skills }) => {
     );
 };
 
-// Projects Component
+
 const Projects = ({ projects }) => {
     return (
         <div>
@@ -123,17 +119,16 @@ const Projects = ({ projects }) => {
 };
 
 
-// --- Main App Component ---
+
 export default function App() {
-    // State to hold profile data, loading status, and errors
+
     const [profile, setProfile] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    // Fetch data from the backend when the component mounts
     useEffect(() => {
         const fetchProfileData = async () => {
-            // Give the free Render instance time to wake up
+      
             await new Promise(resolve => setTimeout(resolve, 1000));
             try {
                 const response = await fetch(API_URL);
@@ -142,15 +137,15 @@ export default function App() {
                 }
                 const data = await response.json();
                 
-                // FIX 2: Handle both array and single object responses from the API
+
                 if (Array.isArray(data) && data.length > 0) {
-                    // If the API sends an array, take the first profile
+
                     setProfile(data[0]);
                 } else if (data && typeof data === 'object' && !Array.isArray(data)) {
-                    // If the API sends a single object, use it directly
+                 
                     setProfile(data);
                 } else {
-                    // This is a valid response, but there's no data in the database.
+   
                     setError("No profile data was found in the database. Please add a profile via the API to see content here.");
                 }
             } catch (err) {
@@ -162,9 +157,9 @@ export default function App() {
         };
 
         fetchProfileData();
-    }, []); // Empty dependency array means this runs once on mount
+    }, []); 
 
-    // Conditional rendering based on state
+
     if (loading) {
         return <LoadingSpinner />;
     }
